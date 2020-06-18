@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<style>
+
+body {
+    background-color: #E6E6FA;;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+
+}
+table#t01 {
+  width: 30%;
+}
+table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+ background-color: #f1f1c1;
+}
+</style>
+
+<body>
+
+<div class="container">
+    <h2>Hi <span th:utext="${userName}"></span>, Welcome to Covid-19 India Dashboard </h2>
+    <a th:href="@{/logout}"><i>Sign out</i></a>
+</div>
+
+
+<div class="container">
+    <h3>India's Covid count</h3>
+<table id="t01" >
+    <tr>
+        <td style="text-align:center"><b>Country Code</b></td>
+        <td style="text-align:center"><b>Country</b></td>
+        <td style="text-align:center"><b>Confirmed Cases</b></td>
+        <td style="text-align:center"><b>Active Cases</b></td>
+        <td style="text-align:center"><b>Recovered</b></td>
+        <td style="text-align:center"><b>Total Deaths</b></td>
+        <td style="text-align:center"><b>Migrated</b></td>
+        <td style="text-align:center"><b>Today's Confirmed Cases</b></td>
+        <td style="text-align:center"><b>Todays's Recovery Count</b></td>
+        <td style="text-align:center"><b>Today's Death Count</b></td>
+        <td style="text-align:center"><b>Last Updated</b></td>
+
+    </tr>
+        <td style="text-align:center" >IN</td>
+        <td style="text-align:center" >India</td>
+        <td style="color:Maroon;text-align:center"  th:text="${covidData.total_values.confirmed}">confirmed</td>
+        <td style="color:DarkBlue;text-align:center" th:text="${covidData.total_values.active}">active</td>
+        <td style="color:Green;text-align:center" th:text="${covidData.total_values.recovered}">recovered</td>
+        <td style="color:Red;text-align:center" th:text="${covidData.total_values.deaths}">deaths</td>
+        <td style="text-align:center" th:text="${covidData.total_values.migratedother}">migratedother</td>
+        <td style="color:Maroon;text-align:center" th:text="${covidData.total_values.deltaconfirmed}">deltaconfirmed</td>
+        <td style="color:Green;text-align:center" th:text="${covidData.total_values.deltarecovered}">deltarecovered</td>
+        <td style="color:Red;text-align:center" th:text="${covidData.total_values.deltadeaths}">deltadeaths</td>
+        <td style="text-align:center" th:text="${covidData.total_values.lastupdatedtime}">lastupdatedtime</td>
+
+</table>
+
+</div>
+
+<div class="container">
+    <h3>India's Covid count Statewise</h3>
+<table id="t01">
+    <tr>
+        <td style="text-align:center"><b>State Code</b></td>
+        <td style="text-align:center"><b>State</b></td>
+        <td style="text-align:center"><b>Confirmed Cases</b></td>
+        <td style="text-align:center"><b>Active Cases</b></td>
+        <td style="text-align:center"><b>Recovered</b></td>
+        <td style="text-align:center"><b>Total Deaths</b></td>
+        <td style="text-align:center"><b>Migrated</b></td>
+        <td style="text-align:center"><b>Today's Confirmed Cases</b></td>
+        <td style="text-align:center"><b>Todays's Recovery Count</b></td>
+        <td style="text-align:center"><b>Today's Death Count</b></td>
+        <td style="text-align:center"><b>Last Updated</b></td>
+    </tr>
+
+    <tr th:each="covid : ${covidData.state_wise}">
+        <td style="text-align:center" th:text="${covid.getValue().statecode}">statecode</td>
+        <td style="text-align:center" th:text="${covid.getValue().state}">state</td>
+        <td style="color:Maroon;text-align:center" th:text="${covid.getValue().confirmed}">confirmed</td>
+        <td style="color:DarkBlue;text-align:center" th:text="${covid.getValue().active}">active</td>
+        <td style="color:Green;text-align:center" th:text="${covid.getValue().recovered}">recovered</td>
+        <td style="color:Red;text-align:center" th:text="${covid.getValue().deaths}">deaths</td>
+        <td style="text-align:center" th:text="${covid.getValue().migratedother}">migratedother</td>
+        <td style="color:Maroon;text-align:center" th:text="${covid.getValue().deltaconfirmed}">deltaconfirmed</td>
+        <td style="color:Green;text-align:center" th:text="${covid.getValue().deltarecovered}">deltarecovered</td>
+        <td style="color:Red;text-align:center" th:text="${covid.getValue().deltadeaths}">deltadeaths</td>
+        <td style="text-align:center" th:text="${covid.getValue().lastupdatedtime}">lastupdatedtime</td>
+    </tr>
+</table>
+</div>
+
+<div>
+    <i>Disclaimer : Data has been sourced from the rapidapi.com</i>
+</div>
+
+</body>
+
+</html>
